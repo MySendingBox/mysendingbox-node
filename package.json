@@ -1,0 +1,50 @@
+{
+  "name": "mysendingbox",
+  "version": "1.0.0",
+  "description": "Mysendingbox API wrapper",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "format:check": "prettier --check ./src/**/*",
+    "format:write": "prettier --write ./src/**/*",
+    "lint:fix": "npm run format:write && eslint --fix ./src/**/*.ts"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mysendingbox/mysendingbox-node.git"
+  },
+  "keywords": [
+    "Mysendingbox-node",
+    "Mysendingbox.com",
+    "Mysendingbox",
+    "printing",
+    "wrapper",
+    "rest",
+    "api"
+  ],
+  "author": "Amiltone <bcourgibet@amiltone.com> (https://amiltone.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mysendingbox/mysendingbox-node/issues"
+  },
+  "homepage": "https://github.com/mysendingbox/mysendingbox-node#readme",
+  "dependencies": {
+    "flat": "^6.0.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2",
+    "vi-fetch": "^0.8.0",
+    "vitest": "^0.34.5"
+  }
+}

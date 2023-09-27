@@ -1,7 +1,7 @@
 import { BodyInit } from 'node-fetch';
 import stream from 'stream';
 
-async function formatRequestBody(body: BodyInit): Promise<BodyInit> {
+async function formatRequestBody(body: unknown): Promise<BodyInit> {
   if (
     typeof body === 'string' ||
     body instanceof Buffer ||

@@ -2,17 +2,25 @@
   "name": "mysendingbox",
   "version": "1.0.0",
   "description": "Mysendingbox API wrapper",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "type": "module",
+  "files": [
+    "lib/**/*",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": "./lib/index.js",
   "scripts": {
-    "build": "tsc",
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:esm",
+    "build:esm": "tsc -p ./tsconfig.esm.json",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "format:check": "prettier --check ./src/**/*",
     "format:write": "prettier --write ./src/**/*",
-    "lint:fix": "npm run format:write && eslint --fix ./src/**/*.ts"
+    "lint": "npm run format:check && eslint ./src/**/*.ts",
+    "lint:fix": "npm run format:write && eslint --fix ./src/**/*.ts",
+    "pack": "npm run build && npm pack"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mysendingbox/mysendingbox-node.git"
@@ -37,14 +45,15 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@types/node": "^20.6.3",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
-    "eslint": "^8.49.0",
+    "@types/node": "^20.8.4",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
     "vi-fetch": "^0.8.0",
-    "vitest": "^0.34.5"
+    "vitest": "^0.34.6"
   }
 }

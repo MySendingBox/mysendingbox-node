@@ -1,60 +1,84 @@
-import fetch, { FormData, Headers } from 'node-fetch';
-import { IConfig } from '../types/config.type';
-import formatRequestBody from './body.helper';
+import fetch, { BodyInit, FormData, Headers, RequestInit } from 'node-fetch';
+import { IConfig } from '../types/config.type.js';
+import formatRequestBody from './body.helper.js';
 
 class RequestHandler {
   private static instance: RequestHandler | null = null;
   private baseUrl: string;
+  private timeout: number;
   private headers: Headers;
 
-  private constructor(baseUrl: string, apiKey: string) {
-    this.baseUrl = baseUrl;
+  private constructor({ host, apiKey, timeout }: IConfig) {
+    this.baseUrl = host;
+    this.timeout = timeout;
     this.headers = new Headers();
-    this.headers.set('Authorization', `Basic ${apiKey} `)
+    this.headers.set('Authorization', `Basic ${Buffer.from(`${apiKey}:`).toString('base64')}`);
+    this.headers.set('Accept', 'application/json');
   }
   
   static getInstance(config: IConfig) {
     if (!this.instance) {
-      this.instance = new RequestHandler(config.host, config.apiKey);
+      this.instance = new RequestHandler(config);
     }
     return this.instance;
   }
 
+  private async fetchWithTimeout(path: string, options: RequestInit) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), this.timeout);
+  
+    const response = await fetch(path, {
+      ...options,
+      signal: controller.signal  
+    });
+    clearTimeout(id);
+  
+    return response;
+  } 
+
   private async fetch<T>(path: string, method: string, data?: unknown): Promise<T> {
-    const formatedData = formatRequestBody(data);
+    let formatedData: BodyInit | null | undefined
+
+    if (data) {
+      formatedData = await formatRequestBody(data);
+    }
+  
     const isMultipart = formatedData instanceof FormData;
-    const options = {
+    
+    this.headers.set('Content-Type', isMultipart ? 'multipart/form-data' : 'application/json');
+
+    const options: RequestInit = {
       method,
-      headers: [
-        ...this.headers,
-        'Accept: application/json',
-        ...(data && method !== 'GET' ? isMultipart ? ['Content-Type: multipart/form-data'] : ['Content-Type: application/json'] : []),
-      ],
-      body: data && method !== 'GET' ? formatedData : undefined,
+      headers: this.headers,
+      body: data && method !== ('GET' || 'DELETE') ? formatedData : null,
     };
 
-    const response = await fetch(path, options);
+    const response = await this.fetchWithTimeout(this.baseUrl + path, options);
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
     }
 
     if (isMultipart) {
-      return response.formData() as unknown as T;
+      return await response.formData() as unknown as T;
     }
 
-    return response.json() as T;
+    return await response.json() as T;
   }
 
   async get(path: string) {
     return this.fetch(path, 'GET');
   }
 
-  async post<T>(path: string, body: Record<string, unknown>) {
+  async post<T>(path: string, body: Record<string, unknown>): Promise<T> {
     return this.fetch<T>(path, 'POST', body);
   }
 
-  async delete(path: string) {
+  async put<T>(path: string, body: Record<string, unknown>): Promise<T> {
+    return this.fetch<T>(path, 'PUT', body);
+  }
+
+  async delete(path: string): Promise<void> {
     return this.fetch(path, 'DELETE');
   }
 }

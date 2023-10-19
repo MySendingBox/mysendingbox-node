@@ -68,13 +68,19 @@ msb.letter.create({
   console.log(err);
 });
 
-/** Retrieve a Letter */
-msb.letter.retrieve("LETTER_ID").then((letter) => {
+/** Retrieve a specific Letter */
+msb.letter.findById("LETTER_ID").then((letter) => {
   console.log(letter);
 }).catch((err) => {
   console.log(err);
 });
 
+/** Retrieve all letters */
+msb.letter.find().then((letter) => {
+  console.log(letter);
+}).catch((err) => {
+  console.log(err);
+});
 ```
 
 ## BreakingChanges

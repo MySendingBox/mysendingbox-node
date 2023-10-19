@@ -1,5 +1,6 @@
 import LetterService from './letters/LetterService.js';
 import InvoiceService from './invoices/InvoiceService.js';
+import AccountService from './accounts/AccountService.js';
 import { IConfig, IUserConfig } from './types/config.type.js';
 
 const MYSENDINGBOX_DEFAULT_HOST = 'https://api.mysendingbox.fr';
@@ -10,6 +11,7 @@ class Mysendingbox {
   private config: IConfig;
   public letter: LetterService;
   public invoice: InvoiceService;
+  public account: AccountService;
 
   constructor(config: IUserConfig) {
     this.config = {
@@ -21,6 +23,7 @@ class Mysendingbox {
 
     this.letter = new LetterService(this.config);
     this.invoice = new InvoiceService(this.config);
+    this.account = new AccountService(this.config);
   }
 }
 

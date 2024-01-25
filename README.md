@@ -2,13 +2,13 @@
 
 ## Description
 
-**MySendingBox API wrapper**. It allows you to send postcards, letters, campaigns and more from your application.
+**Mysendingbox API wrapper**. It allows you to send postcards, letters, campaigns and more from your application.
 
-It's the rebranded and refactored version of the [Seeuletter API wrapper](https://www.npmjs.com/package/seeuletter). If you manage to migrate from Seeuletter to MySendingBox, please read the [breaking changes](#breakingchanges).
+It's the rebranded and refactored version of the [Seeuletter API wrapper](https://www.npmjs.com/package/seeuletter). If you manage to migrate from Seeuletter to Mysendingbox, please read the [breaking changes](#breakingchanges).
 
 ## Prerequisites
 
-This package is written in TypeScript and requires **Node.js** v14.21.3 or higher and **ESM** support.
+This package is written in TypeScript and requires **Node.js** v14.21.3 at least or higher and **ESM** support.
 
 ## Documentation
 
@@ -25,17 +25,17 @@ npm install mysendingbox
 ## Usage
 
 ```typescript
-import { MySendingBox } from 'mysendingbox';
+import Mysendingbox from 'mysendingbox';
 
 const config = {
   apiKey: "YOUR_API_KEY",
   host: "MSB_HOST",
 }
 
-const msb = new MySendingBox(config);
+const msb = new Mysendingbox(config);
 
 /** Create a letter */
-msb.letter.create({
+msb.letter.create('paper', {
   description: "My first test letter",
   to: {
     name: "John Doe",
@@ -76,7 +76,7 @@ msb.letter.findById("LETTER_ID").then((letter) => {
 });
 
 /** Retrieve all letters */
-msb.letter.find().then((letter) => {
+msb.letter.findAll().then((letter) => {
   console.log(letter);
 }).catch((err) => {
   console.log(err);
@@ -85,9 +85,9 @@ msb.letter.find().then((letter) => {
 
 ## BreakingChanges
 
-### Seeuletter to MySendingBox instance
+### Seeuletter to Mysendingbox instance
 
-The Seeuletter instance has been renamed to MySendingBox. You have now to instanciate the class by yourself. The constructor has been updated to accept a config object instead of a string. The config object has three properties: `apiKey`, `host` and `timeout`. The `host` property is optional and defaults to `https://api.mysendingbox.com`.
+The Seeuletter instance has been renamed to Mysendingbox. You have now to instanciate the class by yourself. The constructor has been updated to accept a config object instead of a string. The config object has three properties: `apiKey`, `host` and `timeout`. The `host` property is optional and defaults to `https://api.mysendingbox.fr`.
 
 ```typescript
 // Before
@@ -96,18 +96,18 @@ var Seeuletter = require('seeuletter')('YOUR_API_KEY');
 
 ```typescript
 // After
-import MySendingBox from 'mysendingbox';
+import Mysendingbox from 'mysendingbox';
 
 const config = {
-  apiKey: "YOUR_API_KEY", // required could be found in your MySendingBox dashboard
-  host: "MSB_HOST", // optional, defaults to https://api.mysendingbox.com
+  apiKey: "YOUR_API_KEY", // required could be found in your Mysendingbox dashboard
+  host: "MSB_HOST", // optional, defaults to https://api.mysendingbox.fr
   timeout: 3000, // optional, defaults to 5000
 }
 
-const msb = new MySendingBox(config);
+const msb = new Mysendingbox(config);
 ```
 
-### Seeuletter to MySendingBox Letters
+### Seeuletter to Mysendingbox Letters
 
 The createElectronic method has been merged into a single method create. This method is now deprecated and you have to specify the channel of your choice `paper` or `electronic` as the create method first param.
 

@@ -60,10 +60,10 @@ class RequestHandler {
     }
 
     if (isMultipart) {
-      return await response.formData() as unknown as T;
+      return response.formData() as unknown as T;
     }
 
-    return await response.json() as T;
+    return response.json() as T;
   }
 
   async get(path: string) {

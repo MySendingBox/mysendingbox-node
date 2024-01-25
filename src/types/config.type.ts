@@ -1,6 +1,6 @@
 export interface IConfig {
-  apiKey: string;
-  apiVersion: string;
+  apiKey: string | undefined;
+  apiVersion: string | undefined;
   host: string;
   timeout: number;
 }

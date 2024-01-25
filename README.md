@@ -87,7 +87,7 @@ msb.letter.findAll().then((letter) => {
 
 ### Seeuletter to Mysendingbox instance
 
-The Seeuletter instance has been renamed to Mysendingbox. You have now to instanciate the class by yourself. The constructor has been updated to accept a config object instead of a string. The config object has three properties: `apiKey`, `host` and `timeout`. The `host` property is optional and defaults to `https://api.mysendingbox.com`.
+The Seeuletter instance has been renamed to Mysendingbox. You have now to instanciate the class by yourself. The constructor has been updated to accept a config object instead of a string. The config object has three properties: `apiKey`, `host` and `timeout`. The `host` property is optional and defaults to `https://api.mysendingbox.fr`.
 
 ```typescript
 // Before
@@ -100,7 +100,7 @@ import Mysendingbox from 'mysendingbox';
 
 const config = {
   apiKey: "YOUR_API_KEY", // required could be found in your Mysendingbox dashboard
-  host: "MSB_HOST", // optional, defaults to https://api.mysendingbox.com
+  host: "MSB_HOST", // optional, defaults to https://api.mysendingbox.fr
   timeout: 3000, // optional, defaults to 5000
 }
 

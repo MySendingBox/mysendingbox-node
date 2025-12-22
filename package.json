@@ -1,6 +1,6 @@
 {
   "name": "mysendingbox",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Mysendingbox API wrapper",
   "type": "module",
   "files": [
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mysendingbox/mysendingbox-node.git"
+    "url": "https://github.com/mysendingbox/mysendingbox-node.git"
   },
   "keywords": [
     "Mysendingbox-node",

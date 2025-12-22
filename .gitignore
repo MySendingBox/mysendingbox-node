@@ -3,3 +3,4 @@
 /lib/
 /package-lock.json
 mysendingbox*.tgz
+.npmrc

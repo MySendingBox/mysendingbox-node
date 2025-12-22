@@ -1,5 +1,5 @@
 {
-  "name": "mysendingbox",
+  "name": "mysendingbox-node-pre-publish-test",
   "version": "0.1.0",
   "description": "Mysendingbox API wrapper",
   "type": "module",
